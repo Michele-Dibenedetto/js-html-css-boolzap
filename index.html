@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Boolzap</title>
+</head>
+<body>
+    <div id="root" class="container">
+        <!-- INIZIO CONTENITORE CONTATTI -->
+        <div class="container_contact">
+            <!-- INIZIO SEZIONE UTENTE -->
+            <section class="user">
+                <div class="info_user">
+                    <img class="img_user" src="img\avatar_io.jpg" alt="">
+                    <span>Nome Utente</span>
+                </div>
+                <div class="other_user">
+                    <i class="fas fa-circle-notch"></i>
+                    <i class="fas fa-comment-alt"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </section>
+            <!-- FINE SEZIONE UTENTE -->
+            <!-- INIZIO SEZIONE NOTIFICHE -->
+            <section class="notification">
+                <div class="bell">
+                    <i class="fas fa-bell-slash"></i>
+                </div>
+                <div class="text_notification">
+                    <span>Ricevi notifiche di nuovi messaggi</span>
+                    <br>
+                    <span class="span_small">Attiva notifiche desktop</span>
+                </div>
+            </section>
+            <!-- FINE SEZIONE NOTIFICHE -->
+            <!-- INIZIO SEZIONE RICERCA -->
+            <section class="search">
+                <button class="search_btn"><i class="fas fa-search"></i></button>
+                <input class="search_chat" type="text" placeholder="Cerca o inizia una nuova chat">
+            </section>
+            <!-- FINE SEZIONE RICERCA -->
+            <!-- INIZIO SEZIONE CONTATTI -->
+            <section class="content_contact">
+                <ul class="list_contact">
+                    <li @click="selectContact(index)" v-for="(element, index) in contacts" class="contact" :class="(index == indexContact) ? 'active' : null">
+                        <img :src="'img/avatar' + element.avatar + '.jpg'" class="img_user" alt="image_contact">
+                        <span>{{element.name}}</span>
+                    </li>
+                </ul>
+            </section>
+            <!-- FINE SEZIONE CONTATTI -->
+        </div>
+        <!-- FINE CONTENITORE CONTATTI -->
+        <!-- INIZIO CONTENITORE CHAT -->
+        <div class="container_chat">
+            <!-- INIZIO HEADER CHAT -->
+            <div class="header_chat">
+                <div class="information_contact">
+                    <img :src="'img/avatar' + contacts[indexContact].avatar + '.jpg'" class="img_user">
+                    <div class="name_access_contact">
+                        <span>{{contacts[indexContact].name}}</span>
+                        <br>
+                        <span class="span_small">Ultimo accesso oggi alle</span>
+                    </div>
+                </div>
+
+                <div class="other_chat">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-paperclip"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+            <!-- FINE HEADER CHAT -->
+            <!-- INIZIO BODU CHAT -->
+
+            <div class="body_chat">
+
+                <div v-for="(element, index) in contacts[indexContact].messages" class="container_message">
+                    <div class="message" :class="(element.status == 'sent') ? 'send' : 'received'">
+                        <span class="span_message">{{element.text}}</span>
+                        <span class="span_data">{{element.date}}</span>
+                    </div>
+                </div>
+
+                <!-- <div class="container_message">
+                    <div class=" message send">
+                        <span class="span_message">Ricordati di dargli da mangiare</span>
+                        <span class="span_data">10/01/2020 15:30:45</span>
+                    </div>
+                </div>
+
+                <div class="container_message">
+                    <div class="message received">
+                        <span class="span_message">Tutto fatto!</span>
+                        <span class="span_data">10/01/2020 15:30:45</span>
+                    </div>
+                </div> -->
+
+            </div>
+
+            <!-- FINE BODY CHAT -->
+            <!-- INIZIO FOOTER CHAT -->
+
+            <div class="footer_chat">
+                <i class="far fa-smile"></i>
+                <input placeholder="Scrivi un messaggio" class="input_message" type="text">
+                <i class="fas fa-microphone"></i>
+            </div>
+
+            <!-- FINE FOOTER CHAT -->
+        </div>
+        <!-- FINE CONTENITORE CHAT -->
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
