@@ -1,6 +1,10 @@
 var app = new Vue( {
     el: "#root",
     data: {
+        user: {
+            nome: 'Michele Di benedetto',
+            avatar: '_io'
+        },
         contacts: [
             {
                 name: 'Michele',
@@ -23,6 +27,10 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
+                newMessage: [],
+                newMessageReceived: [],
+                newReceived: "ok",
+                newText: "",
             },
             {
                 name: 'Fabio',
@@ -45,6 +53,10 @@ var app = new Vue( {
                         status: 'sent'
                     }
                 ],
+                newMessage: [],
+                newMessageReceived: [],
+                newReceived: "ok",
+                newText: "",
             },
             {
                 name: 'Samuele',
@@ -67,6 +79,10 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
+                newMessage: [],
+                newMessageReceived: [],
+                newReceived: "ok",
+                newText: "",
             },
             {
                 name: 'Luisa',
@@ -84,13 +100,25 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
+                newMessage: [],
+                newMessageReceived: [],
+                newReceived: "ok",
+                newText: "",
             },
         ],
-        indexContact: 0
+        indexContact: 0,
     },
     methods: {
         selectContact(index) {
             this.indexContact = index;
+        },
+        sendMessage() {
+            this.contacts[this.indexContact].newMessage.push(this.contacts[this.indexContact].newText);
+            this.contacts[this.indexContact].newText = "";
+            setTimeout (() => {
+                this.contacts[this.indexContact].newMessageReceived.push(this.contacts[this.indexContact].newReceived);
+            }, 1000)
         }
     }
 })
+Vue.config.devtools = true;

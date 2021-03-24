@@ -16,8 +16,8 @@
             <!-- INIZIO SEZIONE UTENTE -->
             <section class="user">
                 <div class="info_user">
-                    <img class="img_user" src="img\avatar_io.jpg" alt="">
-                    <span>Nome Utente</span>
+                    <img class="img_user" :src="'img/avatar' + user.avatar + '.jpg'" src="img\avatar_io.jpg" alt="">
+                    <span>{{user.nome}}</span>
                 </div>
                 <div class="other_user">
                     <i class="fas fa-circle-notch"></i>
@@ -76,39 +76,37 @@
                 </div>
             </div>
             <!-- FINE HEADER CHAT -->
-            <!-- INIZIO BODU CHAT -->
+            <!-- INIZIO BODY CHAT -->
 
             <div class="body_chat">
 
-                <div v-for="(element, index) in contacts[indexContact].messages" class="container_message">
-                    <div class="message" :class="(element.status == 'sent') ? 'send' : 'received'">
-                        <span class="span_message">{{element.text}}</span>
-                        <span class="span_data">{{element.date}}</span>
-                    </div>
+                <!-- <div v-for="(element, index) in contacts[indexContact].messages" class="container_message"> -->
+                <div v-for="(element, index) in contacts[indexContact].messages" class="message" :class="(element.status == 'sent') ? 'send' : 'received'">
+                    <span class="span_message">{{element.text}}</span>
+                    <span class="span_data">{{element.date}}</span>
                 </div>
-
-                <!-- <div class="container_message">
-                    <div class=" message send">
-                        <span class="span_message">Ricordati di dargli da mangiare</span>
-                        <span class="span_data">10/01/2020 15:30:45</span>
+                <!-- </div> -->
+                <div v-for="(textNew, indexc) in contacts[indexContact].newMessage" class="newMessage">
+                    <!-- <div class="container_message"> -->
+                    <div class="message send">
+                        <span class="span_message">{{contacts[indexContact].newMessage[indexc]}}</span>
+                        <span class="span_data"></span>
+                        <!-- </div> -->
                     </div>
+                    <!-- <div class="container_message"> -->
+                    <div v-if="contacts[indexContact].newMessageReceived.length > indexc" class="message received">
+                        <span class="span_message">{{contacts[indexContact].newMessageReceived[indexc]}}</span>
+                        <span class="span_data"></span>
+                    </div>
+                    <!-- </div> -->
                 </div>
-
-                <div class="container_message">
-                    <div class="message received">
-                        <span class="span_message">Tutto fatto!</span>
-                        <span class="span_data">10/01/2020 15:30:45</span>
-                    </div>
-                </div> -->
-
             </div>
-
             <!-- FINE BODY CHAT -->
             <!-- INIZIO FOOTER CHAT -->
 
             <div class="footer_chat">
                 <i class="far fa-smile"></i>
-                <input placeholder="Scrivi un messaggio" class="input_message" type="text">
+                <input @keyup.enter="sendMessage" v-model="contacts[indexContact].newText" placeholder="Scrivi un messaggio" class="input_message" type="text">
                 <i class="fas fa-microphone"></i>
             </div>
 
