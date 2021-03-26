@@ -152,10 +152,13 @@ body {
     border-top: 1px solid #d9d9d9;
 }
 .contact:hover {
-    background-color: lightgray;
-}
-.active {
     background-color: #d9d9d9;
+}
+.contact.active {
+    background-color: rgb(201, 194, 194);
+}
+.contact.hidden {
+    display: none;
 }
 .contact span {
     margin-left: 10px;
@@ -209,10 +212,12 @@ body {
 } */
 
 .message {
+    position: relative;
     display: flex;
     align-items: center;
     position: relative;
-    width: 270px;
+    min-width: 40%;
+    max-width: 60%;
     min-height: 50px;
     border-radius: 10px;
     padding: 15px 5px 15px 15px;
@@ -222,11 +227,13 @@ body {
 .message.send {
     float: right;
     background-color: #d5f9ba;
+    clear: both;
 }
 
 .message.received {
     float: left;
     background-color: white;
+    clear: both;
 }
 
 .span_message {
@@ -238,6 +245,38 @@ body {
     right: 5px;
     font-size: 8px;
     color: #b6b9bb;
+}
+
+.icon_action_message {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    color: grey;
+    cursor: pointer;
+    display: none;
+    font-size: 20px;
+}
+.message:hover .icon_action_message {
+    display: inline-block;
+}
+
+.content_action_message {
+    position: absolute;
+    right: 0;
+    top: 15px;
+    z-index: 1;
+    width: 130px;
+    padding: 10px;
+    font-size: 15px;
+    color: #000000a6;
+    background-color: white;
+    line-height: 25px;
+}
+.content_action_message.hidden {
+    display: none;
+}
+.content_action_message.show {
+    display: inline-block;
 }
 
 /* FINE BODY CHAT */

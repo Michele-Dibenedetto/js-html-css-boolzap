@@ -41,13 +41,13 @@
             <!-- INIZIO SEZIONE RICERCA -->
             <section class="search">
                 <button class="search_btn"><i class="fas fa-search"></i></button>
-                <input class="search_chat" type="text" placeholder="Cerca o inizia una nuova chat">
+                <input @keyup="filterName" v-model="searchName" class="search_chat" type="text" placeholder="Cerca o inizia una nuova chat">
             </section>
             <!-- FINE SEZIONE RICERCA -->
             <!-- INIZIO SEZIONE CONTATTI -->
             <section class="content_contact">
                 <ul class="list_contact">
-                    <li @click="selectContact(index)" v-for="(element, index) in contacts" class="contact" :class="(index == indexContact) ? 'active' : null">
+                    <li :class="[(element.visible == false && !(searchName == '')) ? 'hidden' : null, (index == indexContact) ? 'active' : null]" @click="selectContact(index)" v-for="(element, index) in contacts" class="contact">
                         <img :src="'img/avatar' + element.avatar + '.jpg'" class="img_user" alt="image_contact">
                         <span>{{element.name}}</span>
                     </li>
@@ -84,21 +84,12 @@
                 <div v-for="(element, index) in contacts[indexContact].messages" class="message" :class="(element.status == 'sent') ? 'send' : 'received'">
                     <span class="span_message">{{element.text}}</span>
                     <span class="span_data">{{element.date}}</span>
-                </div>
-                <!-- </div> -->
-                <div v-for="(textNew, indexc) in contacts[indexContact].newMessage" class="newMessage">
-                    <!-- <div class="container_message"> -->
-                    <div class="message send">
-                        <span class="span_message">{{contacts[indexContact].newMessage[indexc]}}</span>
-                        <span class="span_data"></span>
-                        <!-- </div> -->
-                    </div>
-                    <!-- <div class="container_message"> -->
-                    <div v-if="contacts[indexContact].newMessageReceived.length > indexc" class="message received">
-                        <span class="span_message">{{contacts[indexContact].newMessageReceived[indexc]}}</span>
-                        <span class="span_data"></span>
-                    </div>
-                    <!-- </div> -->
+                    <i @mouseleave="hiddenActionMessage(index)" @click="showActionMessage(index)" class="fas fa-angle-down icon_action_message">
+                        <div class="content_action_message hidden">
+                            <div class="info_message">Message info</div>
+                            <div @click="deleteMessage(index)" class="delete_message">Delete message</div>
+                        </div>
+                    </i>
                 </div>
             </div>
             <!-- FINE BODY CHAT -->
@@ -106,7 +97,7 @@
 
             <div class="footer_chat">
                 <i class="far fa-smile"></i>
-                <input @keyup.enter="sendMessage" v-model="contacts[indexContact].newText" placeholder="Scrivi un messaggio" class="input_message" type="text">
+                <input @keyup.enter="sendMessage" v-model="newText" placeholder="Scrivi un messaggio" class="input_message" type="text">
                 <i class="fas fa-microphone"></i>
             </div>
 

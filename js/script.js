@@ -27,10 +27,6 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
-                newMessage: [],
-                newMessageReceived: [],
-                newReceived: "ok",
-                newText: "",
             },
             {
                 name: 'Fabio',
@@ -53,10 +49,6 @@ var app = new Vue( {
                         status: 'sent'
                     }
                 ],
-                newMessage: [],
-                newMessageReceived: [],
-                newReceived: "ok",
-                newText: "",
             },
             {
                 name: 'Samuele',
@@ -79,10 +71,6 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
-                newMessage: [],
-                newMessageReceived: [],
-                newReceived: "ok",
-                newText: "",
             },
             {
                 name: 'Luisa',
@@ -100,24 +88,73 @@ var app = new Vue( {
                         status: 'received'
                     }
                 ],
-                newMessage: [],
-                newMessageReceived: [],
-                newReceived: "ok",
-                newText: "",
             },
         ],
         indexContact: 0,
+        newText: "",
+        newMessageReceived: "ok",
+        searchName: "",
+        letterInserted: [],
     },
     methods: {
+
         selectContact(index) {
             this.indexContact = index;
         },
+
         sendMessage() {
-            this.contacts[this.indexContact].newMessage.push(this.contacts[this.indexContact].newText);
-            this.contacts[this.indexContact].newText = "";
+            this.contacts[this.indexContact].messages.push({
+                date: '10/01/2020 15:30:55',
+                text: this.newText,
+                status: 'sent'
+            });
+            this.newText = "";
             setTimeout (() => {
-                this.contacts[this.indexContact].newMessageReceived.push(this.contacts[this.indexContact].newReceived);
-            }, 1000)
+                this.contacts[this.indexContact].messages.push({
+                    date: '10/01/2020 15:30:55',
+                    text: this.newMessageReceived,
+                    status: 'received'  
+                })
+            }, 1000)  
+        },
+
+        filterName() {
+            this.searchName = this.searchName.charAt(0).toUpperCase() + this.searchName.slice(1).toLowerCase()
+            this.letterInserted.push(this.searchName[this.searchName.length -1])
+            this.contacts.forEach((element, index) => {
+                var nameArrey = element.name.split("");
+                var c = 0;
+                var flag = true;
+                while (c < this.letterInserted.length && flag == true) {
+                    if (nameArrey.includes(this.letterInserted[c])) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                    }
+                    c++;
+                }
+                if(flag == true) {
+                    element.visible = true;
+                } else {
+                    element.visible = false;
+                }
+            })
+            if (this.searchName == "") {
+                this.letterInserted = [];    
+            }
+        },
+        showActionMessage(index) {
+            var show = document.getElementsByClassName("content_action_message")[index];
+            show.classList.remove("hidden");
+            show.classList.add("show");
+        },
+        hiddenActionMessage(index) {
+            var hidden = document.getElementsByClassName("content_action_message")[index];
+            hidden.classList.remove("show");
+            hidden.classList.add("hidden");
+        },
+        deleteMessage(index) {
+            this.contacts[this.indexContact].messages.splice(index,1);
         }
     }
 })
