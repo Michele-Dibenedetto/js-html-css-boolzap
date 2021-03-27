@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <title>Boolzap</title>
 </head>
 <body>
@@ -49,7 +50,12 @@
                 <ul class="list_contact">
                     <li :class="[(element.visible == false && !(searchName == '')) ? 'hidden' : null, (index == indexContact) ? 'active' : null]" @click="selectContact(index)" v-for="(element, index) in contacts" class="contact">
                         <img :src="'img/avatar' + element.avatar + '.jpg'" class="img_user" alt="image_contact">
-                        <span>{{element.name}}</span>
+                        <div class="lasttext_name_contact">
+                            <span>{{element.name}}</span>
+                            <br>
+                            <span class="span_small">{{contacts[index].messages[contacts[index].messages.length - 1].text}}</span>
+                        </div>
+                        <span class="span_small data">{{contacts[index].messages[contacts[index].messages.length - 1].date}}</span>
                     </li>
                 </ul>
             </section>
@@ -65,7 +71,7 @@
                     <div class="name_access_contact">
                         <span>{{contacts[indexContact].name}}</span>
                         <br>
-                        <span class="span_small">Ultimo accesso oggi alle</span>
+                        <span class="span_small">Ultimo accesso: {{contacts[indexContact].messages[contacts[indexContact].messages.length - 1].date}}</span>
                     </div>
                 </div>
 

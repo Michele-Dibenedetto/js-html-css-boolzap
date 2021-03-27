@@ -104,14 +104,14 @@ var app = new Vue( {
 
         sendMessage() {
             this.contacts[this.indexContact].messages.push({
-                date: '10/01/2020 15:30:55',
+                date: dayjs().format("DD/MM/YYYY HH:mm:ss"),
                 text: this.newText,
                 status: 'sent'
             });
             this.newText = "";
             setTimeout (() => {
                 this.contacts[this.indexContact].messages.push({
-                    date: '10/01/2020 15:30:55',
+                    date: dayjs().format("DD/MM/YYYY HH:mm:ss"),
                     text: this.newMessageReceived,
                     status: 'received'  
                 })
